@@ -29,7 +29,7 @@ const App = () => {
   const option = {
     cardSize: 200,
     cardMargin: 10,
-    displayCardCount: 4,
+    displayCardCount: 3,
     buttonType: 'default',
     buttonSize: 36,
   };

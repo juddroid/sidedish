@@ -13,18 +13,51 @@ const RaccoonCarousel = ({ option, data }) => {
   } = option;
 
   const [position, setPosition] = useState(0);
+  const [leftSideRestCard, setLeftSideRestCard] = useState(0);
+  const [rightSideRestCard, setRightSideRestCard] = useState(
+    data.length - displayCardCount
+  );
+
   const eachCardSize = cardSize + cardMargin * 2;
+  const displayContainerSize = {
+    width: `${
+      (cardSize + cardMargin * 2) * displayCardCount - cardMargin * 2
+    }px`,
+    height: `${cardSize + cardMargin * 2}px`,
+  };
 
   const handleClickLeftButton = () => {
+    if (leftSideRestCard <= 0) return console.log('left disabled');
+    if (leftSideRestCard < displayCardCount) {
+      const restCardCount = leftSideRestCard % displayCardCount;
+      setPosition(position + eachCardSize * restCardCount);
+      setLeftSideRestCard(leftSideRestCard - restCardCount);
+      setRightSideRestCard(rightSideRestCard + restCardCount);
+      return;
+    }
     setPosition(position + eachCardSize * displayCardCount);
+    setLeftSideRestCard(leftSideRestCard - displayCardCount);
+    setRightSideRestCard(rightSideRestCard + displayCardCount);
+    console.log(leftSideRestCard, rightSideRestCard);
   };
   const handleClickRightButton = () => {
+    if (rightSideRestCard <= 0) return console.log('right disabled');
+    if (rightSideRestCard < displayCardCount) {
+      const restCardCount = rightSideRestCard % displayCardCount;
+      setPosition(position - eachCardSize * restCardCount);
+      setRightSideRestCard(rightSideRestCard - restCardCount);
+      setLeftSideRestCard(leftSideRestCard + restCardCount);
+      return;
+    }
     setPosition(position - eachCardSize * displayCardCount);
+    setRightSideRestCard(rightSideRestCard - displayCardCount);
+    setLeftSideRestCard(leftSideRestCard + displayCardCount);
+    console.log(leftSideRestCard, rightSideRestCard);
   };
 
   return (
     <Wrapper>
-      <DisplayContainer {...{ cardSize, cardMargin, displayCardCount }}>
+      <DisplayContainer {...{ displayContainerSize }}>
         <RaccoonCarouselContainer {...{ position, cardMargin }}>
           <Carousel {...{ cardSize, cardMargin, data }} />
         </RaccoonCarouselContainer>
@@ -52,9 +85,8 @@ const Wrapper = styled.div`
 
 const DisplayContainer = styled.div`
   position: relative;
-  width: ${({ cardSize, cardMargin, displayCardCount }) =>
-    `${(cardSize + cardMargin * 2) * displayCardCount - cardMargin * 2}px`};
-  height: ${({ cardSize, cardMargin }) => `${cardSize + cardMargin * 2}px`};
+  width: ${({ displayContainerSize }) => displayContainerSize.width};
+  height: ${({ displayContainerSize }) => displayContainerSize.height};
   overflow: hidden;
   outline: 1px solid blue;
   background: yellow;
