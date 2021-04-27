@@ -67,4 +67,5 @@ const RaccoonCarouselContainer = styled.div`
   top: 0;
   left: ${({ position, cardMargin }) => `${position - cardMargin}px`};
   outline: 1px solid red;
+  transition: all ease-in-out 0.4s;
 `;
