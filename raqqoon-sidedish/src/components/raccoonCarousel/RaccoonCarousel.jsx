@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Carousel from './Carousel';
 import CarouselButton from './CarouselButton';
@@ -11,17 +12,20 @@ const RaccoonCarousel = ({ option, data }) => {
     buttonSize,
   } = option;
 
+  const [position, setPosition] = useState(0);
+  const eachCardSize = cardSize + cardMargin * 2;
+
   const handleClickLeftButton = () => {
-    console.log('left');
+    setPosition(position - eachCardSize * displayCardCount);
   };
   const handleClickRightButton = () => {
-    console.log('Right');
+    setPosition(position + eachCardSize * displayCardCount);
   };
 
   return (
     <Wrapper>
       <DisplayContainer {...{ cardSize, cardMargin, displayCardCount }}>
-        <RaccoonCarouselContainer>
+        <RaccoonCarouselContainer {...{ position }}>
           <Carousel {...{ cardSize, cardMargin, data }} />
         </RaccoonCarouselContainer>
       </DisplayContainer>
@@ -61,6 +65,6 @@ const RaccoonCarouselContainer = styled.div`
   width: fit-content;
   height: fit-content;
   top: 0;
-  left: 0;
+  left: ${({ position }) => `${position}px`};
   outline: 1px solid red;
 `;
