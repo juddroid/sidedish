@@ -13,6 +13,8 @@ const RaccoonCarousel = ({ option, data }) => {
   } = option;
 
   const [position, setPosition] = useState(0);
+  const [leftArrowButtonState, setLeftArrowButtonState] = useState(false);
+  const [rightArrowButtonState, setRightArrowButtonState] = useState(false);
   const [leftSideRestCard, setLeftSideRestCard] = useState(0);
   const [rightSideRestCard, setRightSideRestCard] = useState(
     data.length - displayCardCount
@@ -23,36 +25,48 @@ const RaccoonCarousel = ({ option, data }) => {
     width: `${
       (cardSize + cardMargin * 2) * displayCardCount - cardMargin * 2
     }px`,
-    height: `${cardSize + cardMargin * 2}px`,
+    height: `${cardSize + cardMargin * 4}px`,
+  };
+
+  const arrowButtonDisableToggle = (state) => {
+    return state ? false : true;
   };
 
   const handleClickLeftButton = () => {
-    if (leftSideRestCard <= 0) return console.log('left disabled');
     if (leftSideRestCard < displayCardCount) {
       const restCardCount = leftSideRestCard % displayCardCount;
       setPosition(position + eachCardSize * restCardCount);
       setLeftSideRestCard(leftSideRestCard - restCardCount);
       setRightSideRestCard(rightSideRestCard + restCardCount);
+      leftSideRestCard <= 0 &&
+        setLeftArrowButtonState(arrowButtonDisableToggle(leftArrowButtonState));
       return;
     }
     setPosition(position + eachCardSize * displayCardCount);
     setLeftSideRestCard(leftSideRestCard - displayCardCount);
     setRightSideRestCard(rightSideRestCard + displayCardCount);
-    console.log(leftSideRestCard, rightSideRestCard);
+    setLeftArrowButtonState(arrowButtonDisableToggle());
+    leftSideRestCard <= 0 &&
+      setLeftArrowButtonState(arrowButtonDisableToggle());
   };
+
   const handleClickRightButton = () => {
-    if (rightSideRestCard <= 0) return console.log('right disabled');
     if (rightSideRestCard < displayCardCount) {
       const restCardCount = rightSideRestCard % displayCardCount;
       setPosition(position - eachCardSize * restCardCount);
       setRightSideRestCard(rightSideRestCard - restCardCount);
       setLeftSideRestCard(leftSideRestCard + restCardCount);
+      rightSideRestCard <= 0 &&
+        setRightArrowButtonState(
+          arrowButtonDisableToggle(rightArrowButtonState)
+        );
       return;
     }
     setPosition(position - eachCardSize * displayCardCount);
     setRightSideRestCard(rightSideRestCard - displayCardCount);
     setLeftSideRestCard(leftSideRestCard + displayCardCount);
-    console.log(leftSideRestCard, rightSideRestCard);
+    rightSideRestCard <= 0 &&
+      setRightArrowButtonState(arrowButtonDisableToggle());
   };
 
   return (
@@ -71,6 +85,8 @@ const RaccoonCarousel = ({ option, data }) => {
           displayCardCount,
           handleClickLeftButton,
           handleClickRightButton,
+          leftArrowButtonState,
+          rightArrowButtonState,
         }}
       />
     </Wrapper>
@@ -88,16 +104,16 @@ const DisplayContainer = styled.div`
   width: ${({ displayContainerSize }) => displayContainerSize.width};
   height: ${({ displayContainerSize }) => displayContainerSize.height};
   overflow: hidden;
-  outline: 1px solid blue;
-  background: yellow;
+  border: 1px solid rebeccapurple;
+  border-radius: 10px;
+
   margin: 80px;
 `;
 const RaccoonCarouselContainer = styled.div`
   position: absolute;
   width: fit-content;
   height: fit-content;
-  top: 0;
+  top: ${({ cardMargin }) => `${cardMargin - 1}px`};
   left: ${({ position, cardMargin }) => `${position - cardMargin}px`};
-  outline: 1px solid red;
   transition: all ease-in-out 0.4s;
 `;

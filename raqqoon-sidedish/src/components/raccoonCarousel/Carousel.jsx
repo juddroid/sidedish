@@ -35,7 +35,6 @@ export default Carousel;
 const CarouselWrapper = styled.div`
   width: 100%;
   height: 100%;
-  outline: 1px solid blue;
   display: flex;
   justify-content: center;
 `;
@@ -43,7 +42,6 @@ const CarouselWrapper = styled.div`
 const CarouselCardListStyle = styled.div`
   display: flex;
   justify-content: space-between;
-  outline: 1px solid green;
   width: 100%;
   height: 100%;
 `;
@@ -51,9 +49,16 @@ const CarouselCardListStyle = styled.div`
 const CarouselCardStyle = styled.div`
   width: ${({ cardSize }) => `${cardSize}px`};
   height: ${({ cardSize }) => `${cardSize}px`};
-  background: tomato;
+  background: #e5e5e5;
   opacity: 50%;
-  outline: 1px solid #222;
-
+  border: 1px solid #222;
+  border-radius: 10px;
   margin: ${({ cardMargin }) => `${cardMargin}px`};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-size: 24px;
+  font-weight: 700;
 `;

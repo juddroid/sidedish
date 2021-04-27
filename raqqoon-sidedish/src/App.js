@@ -28,10 +28,10 @@ const App = () => {
   ];
   const option = {
     cardSize: 200,
-    cardMargin: 10,
-    displayCardCount: 3,
+    cardMargin: 5,
+    displayCardCount: 4,
     buttonType: 'default',
-    buttonSize: 36,
+    buttonSize: 24,
   };
   return (
     <AppContainer className="App">

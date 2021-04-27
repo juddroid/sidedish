@@ -8,20 +8,24 @@ const DefaultButton = ({
   displayCardCount,
   handleClickLeftButton,
   handleClickRightButton,
+  leftArrowButtonState,
+  rightArrowButtonState,
 }) => {
   return (
     <>
       <LeftButtonDiv
-        {...{ cardSize, cardMargin, displayCardCount }}
+        {...{ cardSize, cardMargin, displayCardCount, buttonSize }}
         onClick={handleClickLeftButton}
+        disabled={leftArrowButtonState}
       >
-        <IoChevronBackOutline size={buttonSize} />
+        <IoChevronBackOutline size={buttonSize} color={'rebeccapurple'} />
       </LeftButtonDiv>
       <RightButtonDiv
-        {...{ cardSize, cardMargin, displayCardCount }}
+        {...{ cardSize, cardMargin, displayCardCount, buttonSize }}
         onClick={handleClickRightButton}
+        disabled={rightArrowButtonState}
       >
-        <IoChevronForwardOutline size={buttonSize} />
+        <IoChevronForwardOutline size={buttonSize} color={'rebeccapurple'} />
       </RightButtonDiv>
     </>
   );
@@ -38,6 +42,8 @@ const CarouselButton = ({
   displayCardCount,
   handleClickLeftButton,
   handleClickRightButton,
+  leftArrowButtonState,
+  rightArrowButtonState,
 }) => {
   return {
     default: (
@@ -49,6 +55,8 @@ const CarouselButton = ({
           displayCardCount,
           handleClickLeftButton,
           handleClickRightButton,
+          leftArrowButtonState,
+          rightArrowButtonState,
         }}
       />
     ),
@@ -58,19 +66,36 @@ const CarouselButton = ({
 
 export default CarouselButton;
 
-const LeftButtonDiv = styled.div`
+const StyledArrowButton = styled.button`
   position: absolute;
   top: ${({ cardSize, cardMargin }) =>
     `${(cardSize + cardMargin * 2) / 2 - 20}px`};
-  left: 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${({ buttonSize }) => `${buttonSize + 10}px`};
+  height: ${({ buttonSize }) => `${buttonSize + 10}px`};
+  border-radius: 10px;
+  border: none;
+  background: none;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transition: all ease-in-out 0.4s;
+  }
+  &:disabled {
+    opacity: 50%;
+    background: none;
+  }
 `;
 
-const RightButtonDiv = styled.div`
-  position: absolute;
-  top: ${({ cardSize, cardMargin }) =>
-    `${(cardSize + cardMargin * 2) / 2 - 20}px`};
+const LeftButtonDiv = styled(StyledArrowButton)`
+  left: 40px;
+`;
+
+const RightButtonDiv = styled(StyledArrowButton)`
   left: ${({ cardSize, cardMargin, displayCardCount }) =>
-    `${40 * 2 + 5 + (cardSize + cardMargin * 2) * displayCardCount}px`};
-  cursor: pointer;
+    `${
+      45 + 40 + (cardSize + cardMargin * 2) * displayCardCount - cardMargin * 2
+    }px`};
 `;
