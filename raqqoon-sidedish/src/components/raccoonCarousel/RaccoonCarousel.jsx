@@ -16,16 +16,16 @@ const RaccoonCarousel = ({ option, data }) => {
   const eachCardSize = cardSize + cardMargin * 2;
 
   const handleClickLeftButton = () => {
-    setPosition(position - eachCardSize * displayCardCount);
+    setPosition(position + eachCardSize * displayCardCount);
   };
   const handleClickRightButton = () => {
-    setPosition(position + eachCardSize * displayCardCount);
+    setPosition(position - eachCardSize * displayCardCount);
   };
 
   return (
     <Wrapper>
       <DisplayContainer {...{ cardSize, cardMargin, displayCardCount }}>
-        <RaccoonCarouselContainer {...{ position }}>
+        <RaccoonCarouselContainer {...{ position, cardMargin }}>
           <Carousel {...{ cardSize, cardMargin, data }} />
         </RaccoonCarouselContainer>
       </DisplayContainer>
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
 const DisplayContainer = styled.div`
   position: relative;
   width: ${({ cardSize, cardMargin, displayCardCount }) =>
-    `${(cardSize + cardMargin * 2) * displayCardCount}px`};
+    `${(cardSize + cardMargin * 2) * displayCardCount - cardMargin * 2}px`};
   height: ${({ cardSize, cardMargin }) => `${cardSize + cardMargin * 2}px`};
   overflow: hidden;
   outline: 1px solid blue;
@@ -65,6 +65,6 @@ const RaccoonCarouselContainer = styled.div`
   width: fit-content;
   height: fit-content;
   top: 0;
-  left: ${({ position }) => `${position}px`};
+  left: ${({ position, cardMargin }) => `${position - cardMargin}px`};
   outline: 1px solid red;
 `;
