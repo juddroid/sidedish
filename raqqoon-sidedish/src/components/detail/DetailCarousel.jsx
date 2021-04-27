@@ -1,10 +1,7 @@
 import Carousel from 'components/carousel/Carousel';
-import { DETAIL } from 'const';
-// import TempCarousel from 'component/s/carousel/TempCarousel';
 import styled from 'styled-components';
 
 const DetailCarousel = ({ detailSection }) => {
-  // console.log(detailSection);
   return (
     <DetailCarouselDiv>
       <Carousel path={'side'} panelCount={3} />
