@@ -25,11 +25,20 @@ const App = () => {
     { data: '8' },
     { data: '9' },
     { data: '10' },
+    { data: '11' },
+    { data: '12' },
+    { data: '13' },
+    { data: '14' },
+    { data: '15' },
+    { data: '16' },
+    { data: '17' },
+    { data: '18' },
+    { data: '19' },
   ];
   const option = {
     cardSize: 200,
     cardMargin: 5,
-    displayCardCount: 4,
+    displayCardCount: 3,
     buttonType: 'default',
     buttonSize: 24,
   };

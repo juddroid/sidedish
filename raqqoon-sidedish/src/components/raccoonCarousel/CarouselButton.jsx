@@ -16,14 +16,14 @@ const DefaultButton = ({
       <LeftButtonDiv
         {...{ cardSize, cardMargin, displayCardCount, buttonSize }}
         onClick={handleClickLeftButton}
-        disabled={leftArrowButtonState}
+        disabled={!leftArrowButtonState}
       >
         <IoChevronBackOutline size={buttonSize} color={'rebeccapurple'} />
       </LeftButtonDiv>
       <RightButtonDiv
         {...{ cardSize, cardMargin, displayCardCount, buttonSize }}
         onClick={handleClickRightButton}
-        disabled={rightArrowButtonState}
+        disabled={!rightArrowButtonState}
       >
         <IoChevronForwardOutline size={buttonSize} color={'rebeccapurple'} />
       </RightButtonDiv>

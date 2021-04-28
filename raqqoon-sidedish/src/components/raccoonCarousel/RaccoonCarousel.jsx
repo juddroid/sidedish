@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Carousel from './Carousel';
 import CarouselButton from './CarouselButton';
@@ -13,12 +13,12 @@ const RaccoonCarousel = ({ option, data }) => {
   } = option;
 
   const [position, setPosition] = useState(0);
-  const [leftArrowButtonState, setLeftArrowButtonState] = useState(false);
-  const [rightArrowButtonState, setRightArrowButtonState] = useState(false);
   const [leftSideRestCard, setLeftSideRestCard] = useState(0);
   const [rightSideRestCard, setRightSideRestCard] = useState(
     data.length - displayCardCount
   );
+  const [leftArrowButtonState, setLeftArrowButtonState] = useState(false);
+  const [rightArrowButtonState, setRightArrowButtonState] = useState(false);
 
   const eachCardSize = cardSize + cardMargin * 2;
   const displayContainerSize = {
@@ -40,14 +40,16 @@ const RaccoonCarousel = ({ option, data }) => {
       setRightSideRestCard(rightSideRestCard + restCardCount);
       leftSideRestCard <= 0 &&
         setLeftArrowButtonState(arrowButtonDisableToggle(leftArrowButtonState));
+      rightSideRestCard <= 0 &&
+        setRightArrowButtonState(
+          arrowButtonDisableToggle(rightArrowButtonState)
+        );
       return;
     }
     setPosition(position + eachCardSize * displayCardCount);
     setLeftSideRestCard(leftSideRestCard - displayCardCount);
     setRightSideRestCard(rightSideRestCard + displayCardCount);
-    setLeftArrowButtonState(arrowButtonDisableToggle());
-    leftSideRestCard <= 0 &&
-      setLeftArrowButtonState(arrowButtonDisableToggle());
+    setLeftArrowButtonState(arrowButtonDisableToggle(leftArrowButtonState));
   };
 
   const handleClickRightButton = () => {
@@ -60,14 +62,23 @@ const RaccoonCarousel = ({ option, data }) => {
         setRightArrowButtonState(
           arrowButtonDisableToggle(rightArrowButtonState)
         );
+      leftSideRestCard <= 0 &&
+        setLeftArrowButtonState(arrowButtonDisableToggle(leftArrowButtonState));
       return;
     }
     setPosition(position - eachCardSize * displayCardCount);
     setRightSideRestCard(rightSideRestCard - displayCardCount);
     setLeftSideRestCard(leftSideRestCard + displayCardCount);
-    rightSideRestCard <= 0 &&
-      setRightArrowButtonState(arrowButtonDisableToggle());
   };
+
+  useEffect(() => {
+    leftSideRestCard <= 0
+      ? setLeftArrowButtonState(false)
+      : setLeftArrowButtonState(true);
+    rightSideRestCard <= 0
+      ? setRightArrowButtonState(false)
+      : setRightArrowButtonState(true);
+  }, [leftSideRestCard, rightSideRestCard]);
 
   return (
     <Wrapper>
