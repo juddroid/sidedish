@@ -68,5 +68,4 @@ const Span = styled.span`
   :hover {
     text-decoration: underline;
   }
-
 `;
